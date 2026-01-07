@@ -40,13 +40,11 @@ export default function SignupForm() {
         }
 
         setError(message);
-        console.log("Auth error: ", message);
         setLoading(false);
       } else {
         setEmail("");
         setPassword("");
         setAvatar(null);
-        console.log("User data: ", data);
         setLoading(false);
         router.replace("/dashboard");
       }
@@ -64,7 +62,6 @@ export default function SignupForm() {
       if (error) {
         console.log(error);
       } else {
-        console.log("Claims: ", data);
       }
     };
     getUser();

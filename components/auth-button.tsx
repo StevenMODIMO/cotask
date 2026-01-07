@@ -14,7 +14,6 @@ export default function AuthButton() {
 
   const logout = async () => {
     await supabase.auth.signOut();
-    // no manual setUser here — listener will handle it
     router.replace("/auth/login");
   };
 
