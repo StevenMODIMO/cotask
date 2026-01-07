@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import LightLogo from "@/assets/light.svg";
 import { ChevronLeft, House } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import AuthButton from "./auth-button";
 
 export default function Header() {
   const pathname = usePathname();
@@ -22,21 +23,7 @@ export default function Header() {
             <p className="text-[#262626] dark:text-white font-medium">CoTask</p>
           </Link>
 
-          <div className="flex gap-2">
-            <Button
-              asChild
-              className="bg-[#F59E0B] text-[#262626] hover:bg-[#F59E0B] dark:text-white"
-            >
-              <Link href="/auth/signup">Get started</Link>
-            </Button>
-
-            <Button
-              asChild
-              className="bg-white text-[#262626] hover:bg-white dark:bg-[#262626] dark:text-white"
-            >
-              <Link href="/auth/login">Sign in</Link>
-            </Button>
-          </div>
+          <AuthButton />
         </nav>
       ) : (
         <div className="flex gap-2 items-center">

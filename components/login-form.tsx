@@ -4,6 +4,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { FaGoogle } from "react-icons/fa";
 import { Eye, EyeOff } from "lucide-react";
@@ -16,6 +17,8 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,6 +49,7 @@ export default function LoginForm() {
         setPassword("");
         console.log("User data: ", data);
         setLoading(false);
+        router.replace("/dashboard");
       }
     } catch (err) {
       console.log(err);

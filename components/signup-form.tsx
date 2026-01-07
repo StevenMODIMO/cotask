@@ -7,7 +7,7 @@ import Link from "next/link";
 
 import { FaGoogle } from "react-icons/fa";
 import { Eye, EyeOff, Pencil, Trash } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function SignupForm() {
@@ -18,6 +18,8 @@ export default function SignupForm() {
   const [avatar, setAvatar] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,6 +48,7 @@ export default function SignupForm() {
         setAvatar(null);
         console.log("User data: ", data);
         setLoading(false);
+        router.replace("/dashboard");
       }
     } catch (err) {
       console.log(err);
