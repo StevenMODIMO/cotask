@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Header from "@/components/header";
 import ThemeProvider from "@/components/theme-provider";
+import Container from "@/components/container";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable}`}>
-        <main className="px-2 my-3">
+        <Container>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -37,7 +38,7 @@ export default function RootLayout({
             <Header />
             {children}
           </ThemeProvider>
-        </main>
+        </Container>
       </body>
     </html>
   );

@@ -1,10 +1,12 @@
-import React from "react";
 import type { Metadata } from "next";
+import LoginForm from "@/components/login-form";
 
 export const metadata: Metadata = {
   title: "Sign In",
 };
 
 export default function Login() {
-  return <div>Login</div>;
+  return <div>
+    <LoginForm />
+  </div>;
 }
