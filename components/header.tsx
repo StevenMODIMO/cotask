@@ -13,7 +13,16 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   return (
-    <div>
+    <div
+      className={`${
+        pathname === "/dashboard" ||
+        pathname === "/dashboard/tasks" ||
+        pathname === "/dashboard/teams" ||
+        pathname === "/dashboard/settings"
+          ? "border-b-2 pb-2"
+          : ""
+      }`}
+    >
       {pathname !== "/auth/signup" && pathname !== "/auth/login" ? (
         <nav className="flex justify-between">
           <Link href="/" className="flex items-center gap-2">
@@ -22,7 +31,6 @@ export default function Header() {
             </div>
             <p className="text-[#262626] dark:text-white font-medium">CoTask</p>
           </Link>
-
           <AuthButton />
         </nav>
       ) : (

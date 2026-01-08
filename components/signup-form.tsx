@@ -32,9 +32,9 @@ export default function SignupForm() {
       const { data, error } = await supabase.auth.signUp({ email, password });
 
       if (error) {
+        console.log("Error: ", error)
         let message = error.message;
 
-        // Replace specific error text with custom message
         if (message.includes("Anonymous sign-ins are disabled")) {
           message = "All fields must be filled";
         }
@@ -78,7 +78,7 @@ export default function SignupForm() {
         className="flex flex-col gap-8 p-4"
       >
         <div className="flex flex-col gap-2">
-          <Input
+          {/* <Input
             ref={fileInputRef}
             type="file"
             accept="image/*"
@@ -122,7 +122,7 @@ export default function SignupForm() {
                 </p>
               </div>
             </Label>
-          )}
+          )} */}
 
           <Label id="email">Email address</Label>
           <Input
