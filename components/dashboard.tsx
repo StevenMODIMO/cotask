@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 export default function DashboardNav() {
   const pathname = usePathname();
   return (
-    <div className="absolute bottom-0 border-t-2 w-[90%] pt-2 flex items-center justify-between gap-4 text-[#262626] dark:text-white md:static md:flex-col md:items-start md:justify-between md:border-t-0 md:h-[90%] md:border-x-2 md:w-[5%]">
+    <div className="absolute bottom-0 border-t-2 w-[90%] pt-2 flex items-center lg:hidden justify-between gap-4 text-[#262626] dark:text-white md:static md:flex-col md:items-start md:justify-between md:border-t-0 md:h-[90%] md:border-x-2 md:w-[5%]">
       <div className="flex items-center gap-4 font-medium md:flex-col md:items-start">
         <Link href="/dashboard" className="flex flex-col gap-2 items-center md:flex-row">
           <ChartNoAxesGantt
