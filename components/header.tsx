@@ -24,7 +24,7 @@ export default function Header() {
       }`}
     >
       {pathname !== "/auth/signup" && pathname !== "/auth/login" ? (
-        <nav className="flex justify-between">
+        <nav className="flex justify-between lg:px-4">
           <Link href="/" className="flex items-center gap-2">
             <div className="relative w-8 h-8">
               <Image src={LightLogo} alt="logo" fill />

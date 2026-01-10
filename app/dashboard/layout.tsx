@@ -7,7 +7,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="md:flex md:gap-6">
+    <div className="md:flex md:gap-6 lg:px-4 md:h-150 lg:h-162.5">
       <DashboardNav />
       <div className="md:w-[80%]">{children}</div>
     </div>

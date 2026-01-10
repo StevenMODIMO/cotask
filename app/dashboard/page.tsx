@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 
 export default function Dashboard() {
   return (
-    <div className="pt-6">
+    <div>
       <header className="text-2xl font-medium">
         <header className="text-2xl font-medium">
           <h1>Dashboard</h1>
