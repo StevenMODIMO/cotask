@@ -5,5 +5,13 @@ export const metadata: Metadata = {
 };
 
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  return (
+    <div className="pt-6">
+      <header className="text-2xl font-medium">
+        <header className="text-2xl font-medium">
+          <h1>Dashboard</h1>
+        </header>
+      </header>
+    </div>
+  );
 }
