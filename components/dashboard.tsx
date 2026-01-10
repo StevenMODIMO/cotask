@@ -165,7 +165,7 @@ function NavItem({
     <Link
       href={href}
       className="
-        flex flex-col items-center gap-1 hover:bg-muted lg:p-[2px]
+        flex flex-col items-center gap-1 hover:bg-muted lg:p-0.5
         md:flex-row md:gap-3
       "
     >
