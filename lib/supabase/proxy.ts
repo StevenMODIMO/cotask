@@ -40,8 +40,13 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
 
   const user = data?.claims;
+  const pathname = request.nextUrl.pathname;
 
-  if (!user && !request.nextUrl.pathname.startsWith("/auth")) {
+  const isAuthRoute = pathname.startsWith("/auth");
+  const isLandingPage = pathname === "/";
+  const isPublic = isAuthRoute || isLandingPage;
+
+  if (!user && !isPublic) {
     // No user, trying to access a protected route → redirect to login
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
@@ -49,7 +54,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   // New: Prevent authenticated users from accessing auth routes
-  if (user && request.nextUrl.pathname.startsWith("/auth")) {
+  if (user && (isAuthRoute || isLandingPage)) {
     // Authenticated user trying to access login/signup → redirect to home or dashboard
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard"; // or "/dashboard" if you have a dashboard
