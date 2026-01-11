@@ -1,4 +1,5 @@
 "use client";
+import { createClient } from "@/lib/supabase/client";
 import { useState } from "react";
 import {
   Funnel,
@@ -25,13 +26,16 @@ import {
 
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
-export default function TasksLists() {
+export default function AddTask() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+
+  // supabase initialization
+  const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,14 +45,19 @@ export default function TasksLists() {
 
     try {
       if (!title || !description) {
-        await new Promise((res) => setTimeout(res, 500));
         setError("All fields must be filled");
         setLoading(false);
         return;
       }
+      const { data, error } = await supabase
+        .from("tasks")
+        .insert({ title, description })
+        .select();
 
-      // simulate async action
-      await new Promise((res) => setTimeout(res, 500));
+      if (error) {
+        console.log(error);
+      }
+      console.log(data);
 
       setSuccess("Submitted successfully");
       setTitle("");
