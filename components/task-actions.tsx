@@ -24,15 +24,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export default function TaskActions({
   id,
   title: initialTitle,
   description: initialDescription,
+  status: initialStatus,
+  priority: initialPriority,
 }: {
   id: string;
   title: string;
   description: string;
+  status: string;
+  priority: string;
 }) {
   const supabase = createClient();
 
@@ -43,11 +54,15 @@ export default function TaskActions({
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [priority, setPriority] = useState("");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     if (open) {
       setTitle(initialTitle);
       setDescription(initialDescription);
+      setStatus(initialStatus);
+      setPriority(initialPriority);
     }
   }, [open, initialTitle, initialDescription]);
 
@@ -78,6 +93,8 @@ export default function TaskActions({
       .update({
         title,
         description,
+        status,
+        priority,
       })
       .eq("id", id);
 
@@ -150,6 +167,38 @@ export default function TaskActions({
                   placeholder="Promote new product on social media"
                   className="p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
                 />
+              </div>
+              <div>
+                <Select
+                  defaultValue={priority}
+                  value={priority}
+                  onValueChange={(value) => setPriority(value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Task priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="low">Low</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Select
+                  defaultValue={status}
+                  value={status}
+                  onValueChange={(value) => setStatus(value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Task status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="active">Activate</SelectItem>
+                    <SelectItem value="paused">Pause</SelectItem>
+                    <SelectItem value="done">Done</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             {success && (

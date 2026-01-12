@@ -1,6 +1,6 @@
 "use client";
 import { createClient } from "@/lib/supabase/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Funnel,
   List,
@@ -23,6 +23,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 import { Alert, AlertDescription } from "./ui/alert";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -34,15 +41,37 @@ export default function AddTask() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [priority, setPriority] = useState("");
 
   const router = useRouter();
   const searchParams = useSearchParams();
 
   function setView(type: "list" | "grid") {
+    // store in localStorage
+    localStorage.setItem("tasks_view", type);
+
+    // keep URL in sync
     const params = new URLSearchParams(searchParams);
     params.set("view", type);
     router.push(`?${params.toString()}`, { scroll: false });
   }
+
+  useEffect(() => {
+    const storedView = localStorage.getItem("tasks_view") as
+      | "list"
+      | "grid"
+      | null;
+
+    if (!storedView) return;
+
+    const params = new URLSearchParams(searchParams);
+
+    // avoid unnecessary router pushes
+    if (params.get("view") !== storedView) {
+      params.set("view", storedView);
+      router.replace(`?${params.toString()}`, { scroll: false });
+    }
+  }, []);
 
   // supabase initialization
   const supabase = createClient();
@@ -54,14 +83,14 @@ export default function AddTask() {
     setSuccess(null);
 
     try {
-      if (!title || !description) {
-        setError("All fields must be filled");
+      if (!title || !description || !priority) {
+        setError("Some task details are missing.");
         setLoading(false);
         return;
       }
       const { data, error } = await supabase
         .from("tasks")
-        .insert({ title, description })
+        .insert({ title, description, priority })
         .select();
 
       if (error) {
@@ -87,7 +116,7 @@ export default function AddTask() {
         <div className="flex items-center gap-2">
           <Input
             placeholder="Search tasks"
-            className="p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
+            className="dark:bg-[#1717173d] p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
           />
           <Funnel size={18} />
         </div>
@@ -106,7 +135,7 @@ export default function AddTask() {
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button className="cursor-pointer bg-[#F59E0B] text-[#262626] hover:bg-[#F59E0B] dark:text-white flex items-center">
+              <Button className="cursor-pointer bg-yellow-500 text-[#262626] hover:bg-yellow-500 dark:text-white flex items-center">
                 <Plus size={18} />
                 <span>New task</span>
               </Button>
@@ -148,6 +177,21 @@ export default function AddTask() {
                       className="p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
                     />
                   </div>
+                  <div>
+                    <Select
+                      value={priority}
+                      onValueChange={(value) => setPriority(value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Task priority" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="low">Low</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
                 {success && (
                   <Alert
@@ -181,7 +225,7 @@ export default function AddTask() {
                     </Button>
                   </DialogClose>
                   <Button
-                    className="bg-[#F59E0B] text-[#262626]  cursor-pointer hover:bg-[#F59E0B] dark:text-white"
+                    className="bg-yellow-500 text-[#262626]  cursor-pointer hover:bg-yellow-500 dark:text-white"
                     type="submit"
                   >
                     {!loading ? (

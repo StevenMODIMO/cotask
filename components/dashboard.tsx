@@ -39,7 +39,7 @@ export default function DashboardNav() {
   return (
     <div
       className={`
-        fixed bottom-0 left-0
+        fixed bottom-0 left-0 backdrop-blur-sm
         w-full border-t-2 pt-2
         flex items-center justify-center
         text-[#262626] dark:text-white
@@ -169,7 +169,7 @@ function NavItem({
         md:flex-row md:gap-3
       "
     >
-      <span className={active ? "text-[#F59E0B]" : ""}>{icon}</span>
+      <span className={active ? "text-yellow-500" : ""}>{icon}</span>
       <span
         className={`
     text-xs md:text-sm
