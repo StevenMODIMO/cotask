@@ -6,8 +6,15 @@ interface TaskTypes {
 }
 
 import { createClient } from "@/lib/supabase/server";
+import TaskActions from "./task-actions";
 
-export default async function TasksLists() {
+type ViewMode = "grid" | "list";
+
+export default async function TasksLists({
+  view = "grid",
+}: {
+  view?: ViewMode;
+}) {
   const supabase = await createClient();
 
   const { data: tasks, error } = await supabase
@@ -23,8 +30,11 @@ export default async function TasksLists() {
     return <div>No tasks found</div>;
   }
 
+  const containerClass =
+    view === "list" ? "flex flex-col gap-2" : "grid grid-cols-3 gap-4";
+
   return (
-    <div className="space-y-4">
+    <div className={containerClass}>
       {tasks.map((task: TaskTypes) => (
         <div key={task.id} className="rounded-lg border p-4 shadow-sm">
           <h3 className="font-semibold">{task.title}</h3>
@@ -32,6 +42,13 @@ export default async function TasksLists() {
           <span className="text-xs text-gray-400">
             {new Date(task.created_at).toLocaleString()}
           </span>
+          <div>
+            <TaskActions
+              id={task.id}
+              title={task.title}
+              description={task.description}
+            />
+          </div>
         </div>
       ))}
     </div>

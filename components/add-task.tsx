@@ -24,7 +24,8 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { Alert, AlertDescription } from "./ui/alert";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function AddTask() {
   const [title, setTitle] = useState("");
@@ -33,6 +34,15 @@ export default function AddTask() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  function setView(type: "list" | "grid") {
+    const params = new URLSearchParams(searchParams);
+    params.set("view", type);
+    router.push(`?${params.toString()}`, { scroll: false });
+  }
 
   // supabase initialization
   const supabase = createClient();
@@ -83,8 +93,16 @@ export default function AddTask() {
         </div>
         <div className="flex gap-2 items-center ml-auto w-fit">
           <div className="flex items-center gap-2">
-            <List size={18} />
-            <Grid2X2 size={18} />
+            <List
+              size={18}
+              onClick={() => setView("list")}
+              className="cursor-pointer"
+            />
+            <Grid2X2
+              size={18}
+              onClick={() => setView("grid")}
+              className="cursor-pointer"
+            />
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>

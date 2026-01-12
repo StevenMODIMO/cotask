@@ -41,12 +41,15 @@ export default function AuthButton() {
   return (
     <div>
       {user ? (
-        <Button
-          onClick={logout}
-          className="cursor-pointer bg-[#F59E0B] text-[#262626] hover:bg-[#F59E0B] dark:text-white"
-        >
-          Log out
-        </Button>
+        <>
+          <Link href="/dashboard">Dashboard</Link>
+          <Button
+            onClick={logout}
+            className="cursor-pointer bg-[#F59E0B] text-[#262626] hover:bg-[#F59E0B] dark:text-white"
+          >
+            Log out
+          </Button>
+        </>
       ) : (
         <div className="flex gap-2">
           <Button
