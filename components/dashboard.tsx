@@ -36,6 +36,13 @@ export default function DashboardNav() {
     }
   }, []);
 
+  const isTaskDetailPage =
+    pathname.startsWith("/dashboard/tasks/") && pathname !== "/dashboard/tasks";
+
+  if (isTaskDetailPage) {
+    return null;
+  }
+
   return (
     <div
       className={`
@@ -55,6 +62,7 @@ export default function DashboardNav() {
         
         lg:w-[10%]
         ${collapsed ? "md:w-fit md:pr-2 lg:w-fit" : ""}
+        ${isTaskDetailPage && "hidden"}
       `}
     >
       {/* Main nav */}
@@ -111,7 +119,10 @@ export default function DashboardNav() {
           )}
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild className="hidden md:flex md:mt-1 cursor-pointer">
+          <DropdownMenuTrigger
+            asChild
+            className="hidden md:flex md:mt-1 cursor-pointer"
+          >
             <Button
               variant="ghost"
               size="icon"

@@ -12,17 +12,20 @@ import AuthButton from "./auth-button";
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
+
+  const activeRoutes = [
+    "/dashboard",
+    "/dashboard/tasks",
+    "/dashboard/teams",
+    "/dashboard/settings",
+  ];
+
+  const isActive = activeRoutes.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`)
+  );
+
   return (
-    <div
-      className={`${
-        pathname === "/dashboard" ||
-        pathname === "/dashboard/tasks" ||
-        pathname === "/dashboard/teams" ||
-        pathname === "/dashboard/settings"
-          ? "border-b-2 pb-2"
-          : ""
-      }`}
-    >
+    <div className={`${isActive ? "border-b-2 pb-2" : ""}`}>
       {pathname !== "/auth/signup" && pathname !== "/auth/login" ? (
         <nav className="flex justify-between lg:px-4">
           <Link href="/" className="flex items-center gap-2">
