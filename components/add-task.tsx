@@ -113,25 +113,27 @@ export default function AddTask() {
   return (
     <div className="text-sm">
       <header className="flex flex-col gap-4 mt-3">
-        <div className="flex items-center gap-2">
-          <Input
-            placeholder="Search tasks"
-            className="dark:bg-[#1717173d] p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
-          />
-          <Funnel size={18} />
-        </div>
-        <div className="flex gap-2 items-center ml-auto w-fit">
+        <div className="lg:flex lg:justiy-between">
           <div className="flex items-center gap-2">
-            <List
-              size={18}
-              onClick={() => setView("list")}
-              className="cursor-pointer"
+            <Input
+              placeholder="Search tasks"
+              className="dark:bg-[#1717173d] p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
             />
-            <Grid2X2
-              size={18}
-              onClick={() => setView("grid")}
-              className="cursor-pointer"
-            />
+            <Funnel size={18} />
+          </div>
+          <div className="flex gap-2 items-center ml-auto w-fit">
+            <div className="flex items-center gap-2">
+              <List
+                size={18}
+                onClick={() => setView("list")}
+                className="cursor-pointer"
+              />
+              <Grid2X2
+                size={18}
+                onClick={() => setView("grid")}
+                className="cursor-pointer"
+              />
+            </div>
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>

@@ -9,7 +9,7 @@ export default function DashboardLayout({
   return (
     <div className="md:flex md:gap-6 lg:px-4 md:h-150 lg:h-162.5">
       <DashboardNav />
-      <div className="md:w-[90%] lg:w-[60%] lg:mx-auto">{children}</div>
+      <div className="">{children}</div>
     </div>
   );
 }
