@@ -5,7 +5,6 @@ import {
   UsersRound,
   Bolt,
   PanelTopClose,
-  LaptopMinimal,
   Moon,
   Sun,
 } from "lucide-react";

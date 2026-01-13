@@ -60,7 +60,7 @@ export default async function TasksLists({
           <CardHeader>
             <CardTitle>{task.title}</CardTitle>
             <CardDescription className="text-sm text-muted-foreground">
-              ID: <span>{task.id.slice(0, 12)}...</span>
+              ID: <span>{task.id.slice(0, 20)}...</span>
             </CardDescription>
             <CardAction>
               <Link href={`/dashboard/tasks/${task.id}`}>
