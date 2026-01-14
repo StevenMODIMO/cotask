@@ -41,6 +41,7 @@ export default function AddTask() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
   const [priority, setPriority] = useState("");
 
   const router = useRouter();
@@ -115,10 +116,24 @@ export default function AddTask() {
       <header className="flex flex-col gap-4 mt-3">
         <div className="lg:flex lg:justiy-between">
           <div className="flex items-center gap-2">
-            <Input
-              placeholder="Search tasks"
-              className="dark:bg-[#1717173d] p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
-            />
+            <Dialog open={openSearch} onOpenChange={setOpenSearch}>
+              <DialogTrigger>
+                <Input
+                  onFocus={() => setOpenSearch(true)}
+                  placeholder="Search tasks"
+                  className="dark:bg-[#1717173d] p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
+                />
+              </DialogTrigger>
+              <DialogContent>
+                {" "}
+                <DialogHeader>
+                  <DialogTitle>Search task</DialogTitle>
+                  <DialogDescription>
+                    Create a new task and later invite others to collaborate
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
             <Funnel size={18} />
           </div>
           <div className="flex gap-2 items-center ml-auto w-fit">
