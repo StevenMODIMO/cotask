@@ -14,5 +14,5 @@ export default async function TaskView({
   } else {
     console.log(data[0]);
   }
-  return <div>{data[0]?.title}</div>;
+  return <> {data && <div>{data && data[0]?.title}</div> } </>;
 }
