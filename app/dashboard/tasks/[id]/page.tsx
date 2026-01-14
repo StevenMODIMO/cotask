@@ -12,7 +12,7 @@ export default async function TaskView({
   if (error) {
     console.log(error);
   } else {
-    console.log(data[0]);
+    //console.log(data[0]);
   }
   return <> {data && <div>{data && data[0]?.title}</div> } </>;
 }
