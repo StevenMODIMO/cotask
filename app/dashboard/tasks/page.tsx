@@ -16,7 +16,6 @@ export default async function Tasks({
   searchParams: Promise<{ view?: "list" | "grid" }>;
 }) {
   const { view = "list" } = await searchParams;
-  console.log(view);
   return (
     <div>
       <header className="text-2xl font-medium">
