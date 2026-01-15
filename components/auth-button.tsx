@@ -41,7 +41,7 @@ export default function AuthButton() {
   return (
     <div>
       {user ? (
-        <>
+        <div className="flex items-center gap-2">
           <Link href="/dashboard">Dashboard</Link>
           <Button
             onClick={logout}
@@ -49,7 +49,7 @@ export default function AuthButton() {
           >
             Log out
           </Button>
-        </>
+        </div>
       ) : (
         <div className="flex gap-2">
           <Button

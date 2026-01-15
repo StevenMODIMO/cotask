@@ -257,13 +257,6 @@ export default function AddTask() {
           </Dialog>
         </div>
       </header>
-      {/* <Dialog>
-        <form>
-          <DialogTrigger asChild>
-            <Button></Button>
-          </DialogTrigger>
-        </form>
-      </Dialog> */}
     </div>
   );
 }
