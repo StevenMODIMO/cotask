@@ -5,7 +5,27 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Bell, House } from "lucide-react";
+import { Bell, House, User } from "lucide-react";
+import {
+  Dialog,
+  SideDialogContent,
+  DialogClose,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+  DialogTitle,
+} from "./ui/dialog";
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuGroup,
+  DropdownMenuSeparator,
+} from "./ui/dropdown-menu";
 
 export default function AuthButton() {
   const [user, setUser] = useState<any | null>(null);
@@ -42,27 +62,61 @@ export default function AuthButton() {
   return (
     <div>
       {user ? (
-        <div className="flex items-center gap-2">
-          <Link href="/dashboard">
-            <House size={18} />
-          </Link>
-          <Bell size={18} className="cursor-pointer" />
-          <div className="relative w-10 h-10 cursor-pointer">
-            <Image
-              className="rounded-full border-2 border-dashed"
-              src={user.user_metadata.avatar}
-              alt={user.email}
-              fill={true}
-            />
-          </div>
-          {/* <Button
-            onClick={logout}
-            className="cursor-pointer bg-yellow-500 text-[#262626] hover:bg-yellow-500 dark:text-white"
-          >
-            Log out
-          </Button> */}
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            {user.user_metadata.avatar ? (
+              <div className="relative w-10 h-10 cursor-pointer">
+                <Image
+                  className="rounded-full border-2 border-dashed"
+                  src={user.user_metadata.avatar}
+                  alt={user.email}
+                  fill={true}
+                />
+              </div>
+            ) : (
+              <User size={24} />
+            )}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="text-[#262626] dark:text-white font-medium">
+            <DropdownMenuGroup>
+              <DropdownMenuItem className="font-bold text-[16px]">
+                {user.user_metadata.username}
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-sm">
+                {user.email}
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-xs">{user.id}</DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer" onClick={logout}>
+              Log out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ) : (
+        // <Dialog>
+        //   <DialogTrigger>
+        //     {user.user_metadata.avatar ? (
+        //       <div className="relative w-10 h-10 cursor-pointer">
+        //         <Image
+        //           className="rounded-full border-2 border-dashed"
+        //           src={user.user_metadata.avatar}
+        //           alt={user.email}
+        //           fill={true}
+        //         />
+        //       </div>
+        //     ) : (
+        //       <User size={24} />
+        //     )}
+        //   </DialogTrigger>
+        //   <SideDialogContent>
+        //     <DialogHeader>
+        //       <DialogHeader>
+        //         <DialogTitle>User profile</DialogTitle>
+        //       </DialogHeader>
+        //     </DialogHeader>
+        //   </SideDialogContent>
+        // </Dialog>
         <div className="flex gap-2">
           <Button
             asChild

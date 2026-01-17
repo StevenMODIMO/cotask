@@ -129,6 +129,31 @@ function DialogDescription({
   )
 }
 
+const SideDialogContent = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    side?: "left" | "right"
+  }
+>(({ className, side = "right", ...props }, ref) => (
+  <DialogPrimitive.Portal>
+    <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/50" />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed z-50 h-full w-80 bg-background shadow-lg p-4",
+        "transition-transform duration-300 ease-in-out",
+        side === "right" &&
+          "right-0 top-0 translate-x-0 data-[state=closed]:translate-x-full rounded-l",
+        side === "left" &&
+          "left-0 top-0 translate-x-0 data-[state=closed]:-translate-x-full rounded-r",
+        className
+      )}
+      {...props}
+    />
+  </DialogPrimitive.Portal>
+))
+
+
 export {
   Dialog,
   DialogClose,
@@ -140,4 +165,5 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+  SideDialogContent
 }

@@ -129,7 +129,7 @@ export default function AddTask() {
                 <DialogHeader>
                   <DialogTitle>Search task</DialogTitle>
                   <DialogDescription>
-                    Create a new task and later invite others to collaborate
+                    Search for tasks you have created.
                   </DialogDescription>
                 </DialogHeader>
               </DialogContent>

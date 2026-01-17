@@ -7,7 +7,7 @@ export default async function TaskDeletion({
 }) {
   const { id } = await params;
   return (
-    <div>
+    <div className="md:w-fit md:mx-auto">
       <DeleteTask id={id} />
     </div>
   );

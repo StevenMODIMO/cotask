@@ -51,7 +51,7 @@ export default function DeleteTask({ id }: { id: string }) {
   };
 
   return (
-    <Card className="border-red-500/50">
+    <Card className="border-red-500/50 md:w-fit md:mx-auto">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-red-600">
           <AlertTriangle size={20} />
@@ -63,13 +63,6 @@ export default function DeleteTask({ id }: { id: string }) {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <Alert variant="destructive">
-          <AlertTriangle />
-          <AlertDescription className="font-medium">
-            Deleting this task will cause the following effects:
-          </AlertDescription>
-        </Alert>
-
         <ul className="space-y-3 text-sm">
           <li className="flex gap-2 items-start">
             <Users size={16} className="text-muted-foreground mt-0.5" />
@@ -89,11 +82,6 @@ export default function DeleteTask({ id }: { id: string }) {
           <li className="flex gap-2 items-start">
             <Link2Off size={16} className="text-muted-foreground mt-0.5" />
             Any links or references to this task will break
-          </li>
-
-          <li className="flex gap-2 items-start">
-            <ShieldAlert size={16} className="text-muted-foreground mt-0.5" />
-            This action cannot be reversed by administrators
           </li>
         </ul>
 

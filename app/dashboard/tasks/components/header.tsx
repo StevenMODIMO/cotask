@@ -33,7 +33,10 @@ export default function TaskHeader({ id }: { id: string }) {
 
   return (
     <nav className="border-r-2 h-screen flex flex-col gap-6 px-2">
-      <div onClick={toggleView} className="hidden md:flex items-center gap-2">
+      <div
+        onClick={toggleView}
+        className="hidden md:flex items-center gap-2 font-medium text-sm text-[#262626] dark:text-white cursor-pointer"
+      >
         <PanelTopClose
           className={`${
             !expanded ? "rotate-90" : "rotate-270"
@@ -44,34 +47,72 @@ export default function TaskHeader({ id }: { id: string }) {
       </div>
       <Link href={`/dashboard/tasks`} className="flex items-center gap-2">
         <House size={20} />
-        <span className={`hidden ${expanded ? "md:block" : "hidden"}`}>
+        <span
+          className={`hidden ${
+            expanded
+              ? "md:block font-medium text-sm text-[#262626] dark:text-white"
+              : "hidden"
+          }`}
+        >
           Back to tasks
         </span>
       </Link>
       <Link href={`/dashboard/tasks/${id}`} className="flex items-center gap-2">
         <StickyNote size={20} />
-        <span className={`hidden ${expanded ? "md:block" : "hidden"}`}>Overview</span>
+        <span
+          className={`hidden ${
+            expanded
+              ? "md:block font-medium text-sm text-[#262626] dark:text-white"
+              : "hidden"
+          }`}
+        >
+          Overview
+        </span>
       </Link>
       <Link
         href={`/dashboard/tasks/${id}/edit`}
         className="flex items-center gap-2"
       >
         <Pencil size={20} />
-        <span className={`hidden ${expanded ? "md:block" : "hidden"}`}>Update task</span>
+        <span
+          className={`hidden ${
+            expanded
+              ? "md:block font-medium text-sm text-[#262626] dark:text-white"
+              : "hidden"
+          }`}
+        >
+          Update task
+        </span>
       </Link>
       <Link
         href={`/dashboard/tasks/${id}/delete`}
         className="flex items-center gap-2"
       >
         <Trash size={20} />
-        <span className={`hidden ${expanded ? "md:block" : "hidden"}`}>Delete task</span>
+        <span
+          className={`hidden ${
+            expanded
+              ? "md:block font-medium text-sm text-[#262626] dark:text-white"
+              : "hidden"
+          }`}
+        >
+          Delete task
+        </span>
       </Link>
       <Link
         href={`/dashboard/tasks/${id}/settings`}
         className="flex items-center gap-2"
       >
         <Bolt size={20} />
-        <span className={`hidden ${expanded ? "md:block" : "hidden"}`}>Settings</span>
+        <span
+          className={`hidden ${
+            expanded
+              ? "md:block font-medium text-sm text-[#262626] dark:text-white"
+              : "hidden"
+          }`}
+        >
+          Settings
+        </span>
       </Link>
     </nav>
   );
