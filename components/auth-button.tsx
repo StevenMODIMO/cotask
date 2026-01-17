@@ -1,11 +1,11 @@
 "use client";
-
 import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { Bell, House } from "lucide-react";
 
 export default function AuthButton() {
   const [user, setUser] = useState<any | null>(null);
@@ -39,27 +39,28 @@ export default function AuthButton() {
     };
   }, [supabase]);
 
-
   return (
     <div>
       {user ? (
         <div className="flex items-center gap-2">
-          <div className="relative w-24 h-24 rounded-full border border-dashed">
+          <Link href="/dashboard">
+            <House size={18} />
+          </Link>
+          <Bell size={18} className="cursor-pointer" />
+          <div className="relative w-10 h-10 cursor-pointer">
             <Image
+              className="rounded-full border-2 border-dashed"
               src={user.user_metadata.avatar}
               alt={user.email}
               fill={true}
             />
           </div>
-          <span>{user.email}</span>
-          <span>{user.user_metadata.username}</span>
-          <Link href="/dashboard">Dashboard</Link>
-          <Button
+          {/* <Button
             onClick={logout}
             className="cursor-pointer bg-yellow-500 text-[#262626] hover:bg-yellow-500 dark:text-white"
           >
             Log out
-          </Button>
+          </Button> */}
         </div>
       ) : (
         <div className="flex gap-2">
