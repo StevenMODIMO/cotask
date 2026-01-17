@@ -1,11 +1,8 @@
 "use client";
-import Link from "next/link";
-import React from "react";
-import Logo from "@/assets/icon.png";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import LightLogo from "@/assets/light.svg";
 import { ChevronLeft, House } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import AuthButton from "./auth-button";
 

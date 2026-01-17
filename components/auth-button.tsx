@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function AuthButton() {
   const [user, setUser] = useState<any | null>(null);
@@ -38,10 +39,20 @@ export default function AuthButton() {
     };
   }, [supabase]);
 
+
   return (
     <div>
       {user ? (
         <div className="flex items-center gap-2">
+          <div className="relative w-24 h-24 rounded-full border border-dashed">
+            <Image
+              src={user.user_metadata.avatar}
+              alt={user.email}
+              fill={true}
+            />
+          </div>
+          <span>{user.email}</span>
+          <span>{user.user_metadata.username}</span>
           <Link href="/dashboard">Dashboard</Link>
           <Button
             onClick={logout}

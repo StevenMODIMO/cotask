@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useState, useRef, useEffect } from "react";
+import { ChangeEvent, useState, useRef } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
@@ -8,64 +8,35 @@ import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
 import { Eye, EyeOff, Pencil, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { useSignup } from "@/hooks/useSignup";
 
 export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+
+  const { signup, error, setError, loading, setLoading } = useSignup();
 
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
 
-    const supabase = createClient();
+    const success = await signup({ email, password, username, avatar });
 
-    try {
-      const { data, error } = await supabase.auth.signUp({ email, password });
+    if (!success) return;
 
-      if (error) {
-        console.log("Error: ", error)
-        let message = error.message;
+    setEmail("");
+    setPassword("");
+    setUsername("");
+    setAvatar(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
 
-        if (message.includes("Anonymous sign-ins are disabled")) {
-          message = "All fields must be filled";
-        }
-
-        setError(message);
-        setLoading(false);
-      } else {
-        setEmail("");
-        setPassword("");
-        setAvatar(null);
-        setLoading(false);
-        router.replace("/dashboard");
-      }
-    } catch (err) {
-      console.log(err);
-      setError("Unexpected error occurred");
-      setLoading(false);
-    }
+    router.replace("/dashboard");
   };
-
-  useEffect(() => {
-    const getUser = async () => {
-      const supabase = createClient();
-      const { data, error } = await supabase.auth.getClaims();
-      if (error) {
-        console.log(error);
-      } else {
-      }
-    };
-    getUser();
-  }, []);
 
   return (
     <div className="bg-[#f8f7f7c6] mt-8 rounded-md dark:bg-[#1717173d] sm:w-[60%] sm:mx-auto lg:w-[25%] lg:p-4">
@@ -75,10 +46,10 @@ export default function SignupForm() {
       <form
         onSubmit={handleSubmit}
         onFocus={() => setError(null)}
-        className="flex flex-col gap-8 p-4"
+        className="flex flex-col gap-4 p-4"
       >
         <div className="flex flex-col gap-2">
-          {/* <Input
+          <Input
             ref={fileInputRef}
             type="file"
             accept="image/*"
@@ -90,11 +61,11 @@ export default function SignupForm() {
           />
 
           {avatar ? (
-            <div className="relative p-2 border-2 border-dashed w-16 h-16 rounded-full mx-auto flex items-center justify-center">
+            <div className="relative border-2 border-dashed w-16 h-16 rounded-full mx-auto flex items-center justify-center">
               <img
                 src={URL.createObjectURL(avatar)}
                 alt="avatar"
-                className="w-16 h-16"
+                className="rounded-full"
               />
 
               <footer className="absolute flex bottom-[15%] gap-2">
@@ -106,7 +77,10 @@ export default function SignupForm() {
                 <Trash
                   size={18}
                   className="cursor-pointer"
-                  onClick={() => setAvatar(null)}
+                  onClick={() => {
+                    setAvatar(null);
+                    if (fileInputRef.current) fileInputRef.current.value = "";
+                  }}
                 />
               </footer>
             </div>
@@ -122,17 +96,24 @@ export default function SignupForm() {
                 </p>
               </div>
             </Label>
-          )} */}
-
-          <Label id="email">Email address</Label>
-          <Input
-            className="p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
-            id="email"
-            placeholder="m@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          )}
         </div>
+        <Label id="username">Username</Label>
+        <Input
+          className="p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
+          id="username"
+          placeholder="Jane Doe"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <Label id="email">Email address</Label>
+        <Input
+          className="p-4 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
+          id="email"
+          placeholder="m@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <div className="flex flex-col gap-2">
           <Label id="password" className="flex justify-between">
             <span>Password</span>

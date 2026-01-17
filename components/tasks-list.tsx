@@ -9,7 +9,6 @@ interface TaskTypes {
 
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import TaskActions from "./task-actions";
 import { Badge } from "./ui/badge";
 import {
   ChevronRight,

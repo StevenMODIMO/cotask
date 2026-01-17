@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Task overview section of the web application.",
 };
 
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import AddTask from "@/components/add-task";
 import TasksLists from "@/components/tasks-list";
 import TaskSkeleton from "@/components/task-skeleton";
