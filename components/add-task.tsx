@@ -99,18 +99,14 @@ export default function AddTask() {
       }
 
       if (data) {
-        const { data: notificationData, error: notificationError } =
-          await supabase.from("notifications").insert({
+        await supabase
+          .from("notifications")
+          .insert({
             title: "New task created",
             description:
               "A new task has be addded, get started to work on it now,",
-          }).select();
-
-        if (notificationData) {
-          console.log("Notification added successfully");
-        } else {
-          console.log("Notification Error: ", notificationError);
-        }
+          })
+          .select();
       }
 
       setSuccess("Submitted successfully");

@@ -49,13 +49,35 @@ export default function AuthButton() {
   };
 
   useEffect(() => {
+    const channel = supabase
+      .channel("notifications")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "notifications",
+        },
+        (payload) => {
+          const newNotification = payload.new as NotificationsType;
+
+          setNotifications((prev) =>
+            prev ? [newNotification, ...prev] : [newNotification]
+          );
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  useEffect(() => {
     const getNotifications = async () => {
       const { data, error } = await supabase.from("notifications").select();
       if (data) {
         setNotifications(data);
-        console.log("Current Notifications: ", data);
-      } else {
-        console.log("Error: ", error);
       }
     };
     getNotifications();
@@ -120,7 +142,7 @@ export default function AuthButton() {
                     <DropdownMenuItem>{title}</DropdownMenuItem>
                     <DropdownMenuItem>{description}</DropdownMenuItem>
                     <DropdownMenuItem>{created_at}</DropdownMenuItem>
-              <DropdownMenuSeparator />
+                    <DropdownMenuSeparator />
                   </DropdownMenuGroup>
                 );
               })}
