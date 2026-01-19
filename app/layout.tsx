@@ -17,7 +17,8 @@ export const metadata: Metadata = {
     default: "Cotask",
     template: "Cotask - %s",
   },
-  description: "A collaborative task management platform",
+  description:
+    "A collaborative task management platform with realtime messaging, file management, and invitations across various domains.",
 };
 
 export default function RootLayout({
