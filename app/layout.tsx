@@ -8,7 +8,7 @@ import Container from "@/components/container";
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["cyrillic", "latin", "greek"],
+  subsets: ["cyrillic", "latin"],
   display: "swap",
 });
 
